@@ -27,3 +27,38 @@ function mostrarListaDeAmigos() {
     lista.appendChild(li); //agrega <li> al <ul>
   }
 }
+
+function sortearAmigo() {
+  if (nombresAmigos.length < 2) {
+    alert("Debe haber al menos 2 amigos para hacer el sorteo.");
+    return;
+  }
+
+  const sorteados = [...nombresAmigos]; // clonamos el array
+  let valido = false;
+
+  // Repetimos hasta que nadie se toque a sí mismo
+  while (!valido) {
+    // Mezclamos el array
+    sorteados.sort(() => Math.random() - 0.5);
+
+    // Verificamos si alguien se sorteó a sí mismo
+    valido = true;
+    for (let i = 0; i < nombresAmigos.length; i++) {
+      if (nombresAmigos[i] === sorteados[i]) {
+        valido = false;
+        break;
+      }
+    }
+  }
+
+  // Mostramos los resultados
+  const lista = document.getElementById("listaAmigos");
+  lista.innerHTML = ""; // limpiar antes de mostrar los pares
+
+  for (let i = 0; i < nombresAmigos.length; i++) {
+    const li = document.createElement("li");
+    li.textContent = `${nombresAmigos[i]} → ${sorteados[i]}`;
+    lista.appendChild(li);
+  }
+}
